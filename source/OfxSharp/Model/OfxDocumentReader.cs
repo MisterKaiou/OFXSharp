@@ -115,9 +115,7 @@ namespace OfxSharp
 
         private static IReadOnlyDictionary<String,String> ReadOfxFileHeaderUntilStartOfSgml( TextReader reader )
         {
-            Dictionary<String,String> sgmlHeaderValues = new Dictionary<String,String>();
-
-            //
+            Dictionary<String,String> sgmlHeaderValues = new();
 
             State state = State.BeforeOfxHeader;
             String line;
@@ -134,19 +132,15 @@ namespace OfxSharp
                     break;
 
                 case State.InOfxHeader:
-
-                    if( line.IsEmpty() )
+                    if ( line.Split(':') is { Length: 2 } parts )
                     {
-                        //state = State.StartOfOfxSgml;
-                        return sgmlHeaderValues;
-                    }
-                    else
-                    {
-                        String[] parts = line.Split(':');
                         String name  = parts[0];
                         String value = parts[1];
                         sgmlHeaderValues.Add( name, value );
                     }
+
+                    if( (char)reader.Peek() is '<' ) // We are done, reached the header
+                        return sgmlHeaderValues;
 
                     break;
 
@@ -206,7 +200,7 @@ namespace OfxSharp
 
             // Example cribbed from https://github.com/lovettchris/SgmlReader/blob/363decf083dd847d18c4c765cf0b87598ca491a0/SgmlTests/Tests-Logic.cs
             
-            using( StringReader dtdReader = new StringReader( dtdText ) )
+            using( StringReader dtdReader = new( dtdText ) )
             {
                 SgmlDtd dtd = SgmlDtd.Parse(
                     baseUri : null,
