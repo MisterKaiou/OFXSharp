@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>jcoliz.OfxSharp.NetStandard</PackageId>
     <Description>OFX file parser in a .NET Standard library</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -16,6 +15,8 @@
     <Company>jcoliz</Company>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>OfxSharp.snk</AssemblyOriginatorKeyFile>    
+    <LangVersion>12</LangVersion>    
+    <TargetFrameworks>net8.0;netstandard2.1;netstandard2.0</TargetFrameworks>    
   </PropertyGroup>
 
   <ItemGroup>
