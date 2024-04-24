@@ -115,7 +115,11 @@ namespace OfxSharp
         {
             if( element is null ) throw new ArgumentNullException( nameof( element ) );
 
-            XmlNode singleChild = element.ChildNodes.Cast<XmlNode>().Single();
+            XmlNode singleChild = element.ChildNodes.Cast<XmlNode>().SingleOrDefault();
+            if( singleChild is null )
+            {
+                return string.Empty;
+            }
             if( singleChild.NodeType == XmlNodeType.Text && singleChild is XmlText xmlText )
             {
                 String value = xmlText.Value.Trim();
